@@ -15,7 +15,7 @@ const Chat = ({ location }) => {
     useEffect(() => {
         const {name, room} = queryString.parse(location.search)
 
-        var socket = io(ENDPOINT, {transports: ['websocket', 'polling', 'flashsocket']})
+        socket = io(ENDPOINT, {transports: ['websocket', 'polling', 'flashsocket']})
 
         setName(name)
         setRoom(room)
@@ -36,11 +36,15 @@ const Chat = ({ location }) => {
     }, [messages])
 
     const sendMessage = (event) => {
+        event.preventDefault()
 
         if (message) {
             socket.emit('sendMessage', message, () => setMessage(''))
         }
     }
+
+    console.log(message, messages)
+
     return (
         <div className="outerContainer">
             <div className="container"> 
